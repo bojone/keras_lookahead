@@ -6,7 +6,7 @@
 ```
 model.compile(optimizer=Adam(1e-3), loss='mse') # 用你想用的优化器
 lookahead = Lookahead(k=5, alpha=0.5) # 初始化Lookahead
-lookahead.inject(lookahead) # 插入到模型中
+lookahead.inject(model) # 插入到模型中
 ```
 
 中文介绍：https://mp.weixin.qq.com/s/3J-28xd0pyToSy8zzKs1RA
@@ -19,5 +19,5 @@ Usage:
 ```
 model.compile(optimizer=Adam(1e-3), loss='mse') # Any optimizer
 lookahead = Lookahead(k=5, alpha=0.5) # Initialize Lookahead
-lookahead.inject(lookahead) # add into model
+lookahead.inject(model) # add into model
 ```
