@@ -1,3 +1,8 @@
+#! -*- coding: utf-8 -*-
+
+from keras import backend as K
+
+
 class Lookahead:
     """为Keras的优化器加入Lookahead功能
     来源论文：https://arxiv.org/abs/1907.08610
