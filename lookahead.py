@@ -1,6 +1,3 @@
-from keras import backend as K
-
-
 class Lookahead:
     """为Keras的优化器加入Lookahead功能
     来源论文：https://arxiv.org/abs/1907.08610
@@ -27,11 +24,11 @@ class Lookahead:
                     training_updates = model.optimizer.get_updates(
                         params=fast_params,
                         loss=model.total_loss)
-                    slow_params = [K.zeros_like(p) for p in fast_params]  
+                    slow_params = [K.variable(p) for p in fast_params]
                 fast_updates = (model.updates +
                                 training_updates +
                                 model.metrics_updates)
-                slow_updates, copy_updates = []
+                slow_updates, copy_updates = [], []
                 for p, q in zip(fast_params, slow_params):
                     slow_updates.append(K.update(q, q + self.alpha * (p - q)))
                     copy_updates.append(K.update(p, q))
