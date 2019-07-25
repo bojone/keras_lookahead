@@ -9,6 +9,7 @@ lookahead = Lookahead(k=5, alpha=0.5) # 初始化Lookahead
 lookahead.inject(lookahead) # 插入到模型中
 ```
 
+中文介绍：https://mp.weixin.qq.com/s/3J-28xd0pyToSy8zzKs1RA
 
 ## lookahead optimizer for keras
 
