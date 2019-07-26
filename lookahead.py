@@ -46,10 +46,9 @@ class Lookahead:
                     **model._function_kwargs)
                 def F(inputs):
                     self.count += 1
-                    if self.count % self.k == 1:
-                        K.batch_get_value(copy_updates)
                     R = fast_train_function(inputs)
                     if self.count % self.k == 0:
                         K.batch_get_value(slow_updates)
+                        K.batch_get_value(copy_updates)
                     return R
                 model.train_function = F
