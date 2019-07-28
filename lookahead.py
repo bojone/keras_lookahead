@@ -3,20 +3,23 @@
 from keras import backend as K
 
 
-class Lookahead:
-    """为Keras的优化器加入Lookahead功能
-    来源论文：https://arxiv.org/abs/1907.08610
+class Lookahead(object):
+    """Add the [Lookahead Optimizer](https://arxiv.org/abs/1907.08610) functionality for [keras](https://keras.io/).
     """
+
     def __init__(self, k=5, alpha=0.5):
         self.k = k
         self.alpha = alpha
         self.count = 0
+
     def inject(self, model):
-        """传入模型做注入
+        """Inject the Lookahead algorithm for the given model.
         """
         if not hasattr(model, 'train_function'):
             raise RuntimeError('You must compile your model before using it.')
+
         model._check_trainable_weights_consistency()
+
         if model.train_function is None:
             inputs = (model._feed_inputs +
                       model._feed_targets +
@@ -24,6 +27,7 @@ class Lookahead:
             if model._uses_dynamic_learning_phase():
                 inputs += [K.learning_phase()]
             fast_params = model._collected_trainable_weights
+
             with K.name_scope('training'):
                 with K.name_scope(model.optimizer.__class__.__name__):
                     training_updates = model.optimizer.get_updates(
@@ -33,10 +37,12 @@ class Lookahead:
                 fast_updates = (model.updates +
                                 training_updates +
                                 model.metrics_updates)
+
                 slow_updates, copy_updates = [], []
                 for p, q in zip(fast_params, slow_params):
                     slow_updates.append(K.update(q, q + self.alpha * (p - q)))
                     copy_updates.append(K.update(p, q))
+
                 # Gets loss and metrics. Updates weights at each call.
                 fast_train_function = K.function(
                     inputs,
@@ -44,6 +50,7 @@ class Lookahead:
                     updates=fast_updates,
                     name='fast_train_function',
                     **model._function_kwargs)
+
                 def F(inputs):
                     self.count += 1
                     R = fast_train_function(inputs)
