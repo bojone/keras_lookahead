@@ -60,4 +60,5 @@ class Lookahead(object):
                         K.batch_get_value(slow_updates)
                         K.batch_get_value(copy_updates)
                     return R
+                
                 model.train_function = F
