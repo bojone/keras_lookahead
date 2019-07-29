@@ -14,6 +14,8 @@ class Lookahead(object):
 
     def inject(self, model):
         """Inject the Lookahead algorithm for the given model.
+        The following code is modified from keras's _make_train_function method.
+        See: https://github.com/keras-team/keras/blob/master/keras/engine/training.py#L497
         """
         if not hasattr(model, 'train_function'):
             raise RuntimeError('You must compile your model before using it.')
