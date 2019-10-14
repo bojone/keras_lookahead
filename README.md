@@ -21,3 +21,6 @@ lookahead.inject(model) # 插入到模型中
 ```
 
 中文介绍：[点击进入](https://mp.weixin.qq.com/s/3J-28xd0pyToSy8zzKs1RA)
+
+## 交流
+QQ交流群：67729435，微信群请加机器人微信号spaces_ac_cn
